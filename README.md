@@ -108,6 +108,7 @@ ansible-lab/
 │   └── test.yml
 ├── docker-compose.yml
 ├── ansible.cfg
+├── setup.sh
 └── README.md
 ```
 
@@ -193,15 +194,6 @@ If you cannot SSH into containers:
 2. Permission issues: Ensure ansible user has sudo access
 3. Python not found: All containers come with Python pre-installed
 4. SSH key errors: Host key checking is disabled by default
-
-## Learning Path
-
-Follow the learning guide in `learning_guide.md` for:
-1. Basic Ansible concepts
-2. Playbook development
-3. Role creation
-4. Best practices
-5. Advanced topics
 
 ## Contributing
 

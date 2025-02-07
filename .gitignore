@@ -6,7 +6,6 @@ ssh_keys/
 
 # Ansible
 *.retry
-ansible.cfg
 inventory/group_vars/vault.yml
 inventory/*.vault
 
