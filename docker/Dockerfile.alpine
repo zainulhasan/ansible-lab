@@ -1,0 +1,23 @@
+FROM alpine:3.18
+
+# Install required packages
+RUN apk add --no-cache \
+    openssh \
+    python3 \
+    sudo \
+    bash
+
+# Configure SSH
+RUN ssh-keygen -A && \
+    echo 'root:ansible' | chpasswd
+
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# Create ansible user
+RUN adduser -D -s /bin/bash ansible && \
+    echo "ansible:ansible" | chpasswd && \
+    echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"] 

@@ -1,0 +1,24 @@
+---
+- name: Test Connection and Setup
+  hosts: all
+  gather_facts: true
+  
+  tasks:
+    - name: Ping test
+      ping:
+      
+    - name: Get OS information
+      debug:
+        msg: "OS: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+        
+    - name: Create test file
+      file:
+        path: /tmp/ansible_test
+        state: touch
+        mode: '0644'
+      
+    - name: Write to test file
+      lineinfile:
+        path: /tmp/ansible_test
+        line: "Ansible test successful on {{ ansible_hostname }}"
+        create: yes 

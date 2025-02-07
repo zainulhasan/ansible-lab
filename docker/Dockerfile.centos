@@ -1,0 +1,29 @@
+FROM rockylinux/rockylinux:8
+
+# Install required packages
+RUN dnf -y update && \
+    dnf -y install \
+    openssh-server \
+    python3 \
+    sudo \
+    && dnf clean all
+
+# Configure SSH
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' && \
+    ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N '' && \
+    ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
+
+RUN echo 'root:ansible' | chpasswd
+RUN sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# Create ansible user
+RUN useradd -m -s /bin/bash ansible && \
+    echo "ansible:ansible" | chpasswd && \
+    echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+
+# Fix for pam_nologin
+RUN rm -f /run/nologin /var/run/nologin
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"] 

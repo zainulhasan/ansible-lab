@@ -1,0 +1,28 @@
+[all:vars]
+ansible_user=ansible
+ansible_password=ansible
+ansible_become=yes
+ansible_become_password=ansible
+ansible_host=127.0.0.1
+
+[ubuntu]
+ubuntu-node ansible_port=2221
+
+[rocky]
+rocky-node ansible_port=2222
+
+[debian]
+debian-node ansible_port=2223
+
+[alpine]
+alpine-node ansible_port=2224
+
+[web_servers]
+ubuntu-node
+debian-node
+
+[db_servers]
+rocky-node
+
+[cache_servers]
+alpine-node 

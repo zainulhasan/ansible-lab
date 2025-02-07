@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  ubuntu:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.ubuntu
+    hostname: ubuntu-node
+    ports:
+      - "2221:22"
+    networks:
+      ansible_net:
+        ipv4_address: 172.20.0.2
+
+  rocky:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.centos
+    hostname: rocky-node
+    ports:
+      - "2222:22"
+    networks:
+      ansible_net:
+        ipv4_address: 172.20.0.3
+
+  debian:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.debian
+    hostname: debian-node
+    ports:
+      - "2223:22"
+    networks:
+      ansible_net:
+        ipv4_address: 172.20.0.4
+
+  alpine:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.alpine
+    hostname: alpine-node
+    ports:
+      - "2224:22"
+    networks:
+      ansible_net:
+        ipv4_address: 172.20.0.5
+
+networks:
+  ansible_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16 
